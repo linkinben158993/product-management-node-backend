@@ -4,7 +4,11 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
+import { UsersModule } from './users/users.module';
+import * as process from 'node:process';
 
+// @ts-ignore
 @Module({
   imports: [
     AuthModule,
@@ -19,8 +23,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
+        schema: configService.get('DB_SCHEMA'),
+        entities: [join(process.cwd(), 'dist/**/*.entity.js')],
+        migrations: [join(process.cwd(), 'dist/migrations/**/*{.ts,.js}')],
+        synchronize: configService.get('NODE_ENV') !== 'production',
       }),
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
