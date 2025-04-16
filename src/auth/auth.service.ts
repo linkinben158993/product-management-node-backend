@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthPayloadDto } from '../domain/dto/AuthPayloadDto';
+import { AuthPayloadDto } from '../domain/dto/auth.payload.dto';
 import { JwtService } from '@nestjs/jwt';
 
 const stubUsers = [
@@ -19,6 +19,7 @@ const stubUsers = [
 export class AuthService {
   constructor(private jwtService: JwtService) {}
 
+  // Todo: Implement DB query here.
   validateUser(credentialPayload: AuthPayloadDto) {
     const { username, password } = credentialPayload;
     const foundCredential = stubUsers.find(

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthPayloadDto } from '../domain/dto/AuthPayloadDto';
+import { AuthPayloadDto } from '../domain/dto/auth.payload.dto';
 import { AuthService } from './auth.service';
 import { MyLocalGuard } from './guard/my.local.guard';
 import { Request } from 'express';
@@ -11,22 +11,13 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(MyLocalGuard)
-  login(@Body() credentialPayload: AuthPayloadDto) {
-    if (!credentialPayload) {
-      return new HttpException(
-        'Username and Password Is Required',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    const user = this.authService.validateUser(credentialPayload);
-
-    return this.authService.validateUser(credentialPayload);
+  login(@Req() req: Request) {
+    return req.user;
   }
 
   @Get('status')
   @UseGuards(MyJwtGuard)
   status(@Req() req: Request) {
-
+    return req.user;
   }
 }
