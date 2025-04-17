@@ -2,12 +2,12 @@ name: product_management
 services:
   postgresql:
     image: postgres:16.4
-    # volumes:
-    #   - ~/volumes/jhipster/monolithic/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=product_management
       - POSTGRES_PASSWORD=secret
       - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}']
       interval: 5s

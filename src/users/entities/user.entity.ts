@@ -15,7 +15,7 @@ export class User {
     enum: ['procurement', 'manager', 'inventory', 'finance'],
   })
   role: string;
-  @Column({ type: 'timestamp', default: () => new Date() })
+  @Column({ type: 'timestamptz', default: () => 'NOW()' })
   created_at: Date;
 
   // @Column({ type: 'numeric', precision: 12, scale: 2 })
