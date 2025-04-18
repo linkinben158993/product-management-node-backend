@@ -1,34 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { AuthPayloadDto } from '../domain/dto/auth.payload.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 const stubUsers = [
   {
     id: 1,
     username: 'peterparker',
     password: '123456',
+    role: 'finance',
   },
   {
     id: 2,
     username: 'spiderman',
     password: '123456',
+    role: 'procurement',
   },
 ];
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private userService: UsersService,
+  ) {}
 
-  // Todo: Implement DB query here.
-  validateUser(credentialPayload: AuthPayloadDto) {
+  async validateUser(credentialPayload: AuthPayloadDto) {
     const { username, password } = credentialPayload;
-    const foundCredential = stubUsers.find(
-      (user) => user.username === username,
-    );
+    const foundCredential = await this.userService.findByEmail(username);
 
     if (!foundCredential) return null;
-    if (password === foundCredential.password) {
-      const { password, ...authorizedCredentials } = foundCredential;
+
+    if (await bcrypt.compare(password, foundCredential.password_hash)) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password_hash, ...authorizedCredentials } = foundCredential;
       return this.jwtService.sign(authorizedCredentials);
     }
   }
