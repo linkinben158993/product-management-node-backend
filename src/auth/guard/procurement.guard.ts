@@ -8,10 +8,7 @@ export class ProcurementGuard extends AuthGuard('myjwtstrategy') {
     super();
   }
 
-  ROUTE_PATH = [{
-
-  }];
-
+  // Todo: There must be a more generic way we can do this
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
@@ -28,6 +25,10 @@ export class ProcurementGuard extends AuthGuard('myjwtstrategy') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (path === '/purchase-orders' && methods.post) {
         return role === 'procurement' || role === 'manager';
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      else if (path === '/purchase-orders/:id' && methods.patch) {
+        return role === 'manager' || role === 'finance';
       } else {
         return role === 'procurement';
       }

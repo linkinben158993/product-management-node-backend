@@ -36,6 +36,7 @@ export class PurchaseOrdersController {
   }
 
   @Patch(':id')
+  @UseGuards(ProcurementGuard)
   update(
     @Param('id') id: string,
     @Body() updatePurchaseOrderDto: UpdatePurchaseOrderDto,
