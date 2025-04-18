@@ -1,5 +1,6 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { PurchaseOrder } from '../../purchase_orders/entities/purchase_order.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -23,6 +24,9 @@ export class User {
 
   @Column({ type: 'timestamptz', default: () => 'NOW()' })
   created_at: Date;
+
+  @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.created_by)
+  purchase_orders: PurchaseOrder[];
 
   @BeforeInsert()
   async setPasswordHash(password: string) {

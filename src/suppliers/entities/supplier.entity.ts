@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { PurchaseOrder } from '../../purchase_orders/entities/purchase_order.entity';
 
 @Entity('suppliers')
 export class Supplier {
@@ -16,4 +17,7 @@ export class Supplier {
 
   @Column({ type: 'timestamptz', default: () => 'NOW()' })
   created_at: Date;
+
+  @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.supplier_id)
+  purchase_orders: PurchaseOrder[];
 }
