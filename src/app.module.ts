@@ -6,9 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
 import * as process from 'node:process';
 
-// @ts-ignore
 @Module({
   imports: [
     AuthModule,
@@ -30,6 +30,7 @@ import * as process from 'node:process';
       }),
     }),
     UsersModule,
+    SuppliersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
