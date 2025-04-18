@@ -8,6 +8,7 @@ import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { ProductsModule } from './products/products.module';
+import { PurchaseOrdersModule } from './purchase_orders/purchase_orders.module';
 import * as process from 'node:process';
 
 @Module({
@@ -33,6 +34,7 @@ import * as process from 'node:process';
     UsersModule,
     SuppliersModule,
     ProductsModule,
+    PurchaseOrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
