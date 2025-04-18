@@ -11,6 +11,16 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
+  private createProduct = (createProductDto: CreateProductDto): Product => {
+    const product = new Product();
+    product.name = createProductDto.name;
+    product.sku = createProductDto.sku;
+    product.category = createProductDto.category || '';
+    product.unit_price = createProductDto.unit_price;
+
+    return product;
+  };
+
   async createOrUpdate(createProductDto: CreateProductDto) {
     const supplier = await this.productRepository.upsert(createProductDto, [
       'id',

@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PurchaseOrdersService } from './purchase_orders.service';
 import { CreatePurchaseOrderDto } from './dto/create-purchase_order.dto';
 import { UpdatePurchaseOrderDto } from './dto/update-purchase_order.dto';
 import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
-import { ProcurementGuard } from '../auth/guard/procurement.guard';
+import { PurchaseOrderGuard } from '../auth/guard/purchase-order.guard';
+import { Request } from 'express';
 
 @Controller('purchase-orders')
 @UseGuards(MyJwtGuard)
@@ -20,14 +22,20 @@ export class PurchaseOrdersController {
   constructor(private readonly purchaseOrdersService: PurchaseOrdersService) {}
 
   @Post()
-  @UseGuards(ProcurementGuard)
-  create(@Body() createPurchaseOrderDto: CreatePurchaseOrderDto) {
-    return this.purchaseOrdersService.create(createPurchaseOrderDto);
+  @UseGuards(PurchaseOrderGuard)
+  async create(@Req() req: Request, @Body() createPurchaseOrderDto: CreatePurchaseOrderDto) {
+    const { supplierId, supplierEmail } = createPurchaseOrderDto;
+    return await this.purchaseOrdersService.create(req.user, supplierId, supplierEmail);
   }
 
   @Get()
   findAll() {
     return this.purchaseOrdersService.findAll();
+  }
+
+  @Get('/review')
+  async findPendingReviewPurchaseOrder() {
+    return await this.purchaseOrdersService.findPendingReview();
   }
 
   @Get(':id')
@@ -36,12 +44,22 @@ export class PurchaseOrdersController {
   }
 
   @Patch(':id')
-  @UseGuards(ProcurementGuard)
+  @UseGuards(PurchaseOrderGuard)
   update(
-    @Param('id') id: string,
+    @Req() req: Request,
+    @Param('id') purchaseOrderId: string,
     @Body() updatePurchaseOrderDto: UpdatePurchaseOrderDto,
   ) {
-    return this.purchaseOrdersService.update(id, updatePurchaseOrderDto);
+    console.log(
+      'Purchase Order Controller user=',
+      req.user,
+      'id=',
+      purchaseOrderId,
+    );
+    return this.purchaseOrdersService.update(
+      purchaseOrderId,
+      updatePurchaseOrderDto,
+    );
   }
 
   @Delete(':id')

@@ -1,1 +1,4 @@
-export class CreatePurchaseOrderDto {}
+export class CreatePurchaseOrderDto {
+  supplierId: string;
+  supplierEmail: string;
+}

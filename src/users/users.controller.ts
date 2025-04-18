@@ -6,13 +6,14 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
+  UseGuards, Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ProcurementGuard } from '../auth/guard/procurement.guard';
+import { PurchaseOrderGuard } from '../auth/guard/purchase-order.guard';
 import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
+import { Request } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -24,13 +25,14 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(MyJwtGuard, ProcurementGuard)
+  @UseGuards(MyJwtGuard, PurchaseOrderGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @UseGuards(MyJwtGuard, PurchaseOrderGuard)
+  findOne(@Req() req: Request, @Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 

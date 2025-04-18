@@ -3,7 +3,7 @@ import { ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { UsersService } from '../../users/users.service';
 
-export class ProcurementGuard extends AuthGuard('myjwtstrategy') {
+export class PurchaseOrderGuard extends AuthGuard('myjwtstrategy') {
   constructor(private readonly userService: UsersService) {
     super();
   }
