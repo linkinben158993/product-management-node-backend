@@ -15,7 +15,6 @@ import { ProcurementGuard } from '../auth/guard/procurement.guard';
 import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
 
 @Controller('users')
-@UseGuards(MyJwtGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -25,7 +24,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(ProcurementGuard)
+  @UseGuards(MyJwtGuard, ProcurementGuard)
   findAll() {
     return this.usersService.findAll();
   }
