@@ -27,7 +27,7 @@ export class SuppliersService {
 
   async findOne(id: string) {
     const supplier = await this.supplierRepository.findOne({ where: { id } });
-    console.log('Found user', supplier);
+    console.log('Found supplier', supplier);
     return supplier;
   }
 
@@ -37,7 +37,7 @@ export class SuppliersService {
       throw new NotFoundException();
     }
 
-    console.log('Removing user with id', id);
+    console.log('Removing supplier with id', id);
 
     return await this.supplierRepository.remove(foundSupplier);
   }
