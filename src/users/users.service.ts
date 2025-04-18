@@ -11,6 +11,10 @@ export class UsersService {
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
 
+  async registerUser(createUserDto: CreateUserDto) {
+    return await this.usersRepository.save(this.createUser(createUserDto));
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.save(createUserDto);
     console.log('Newly created user', user);
@@ -55,5 +59,15 @@ export class UsersService {
     console.log('Removing user with id', id);
 
     return await this.usersRepository.remove(foundUser);
+  }
+
+  private createUser(createUserDto: CreateUserDto) {
+    const user = new User();
+    user.name = createUserDto.name;
+    user.email = createUserDto.email;
+    user.password_hash = createUserDto.password_hash;
+    user.role = createUserDto.role;
+
+    return user;
   }
 }

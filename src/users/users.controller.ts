@@ -31,4 +31,9 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+  @Post('/register')
+  async register(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.registerUser(createUserDto);
+  }
 }
