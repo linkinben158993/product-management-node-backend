@@ -105,3 +105,14 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+## TOBEDONE
+- Finishing other biz workflows:
+    - Adding Products to exising Purchase Order
+    - Pending_review -> approved
+    - Tests
+    - Entire operational must be transactional <- concurrency checking on your current code.
+    - Cron tab/Caching layer are nice.
+- Improving RBAC using HasRole decorator.
+- Improving how we're injecting env variables - secrets.
