@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.payload.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
+import { UsersService } from '../domain/users/users.service';
 
 const stubUsers = [
   {

@@ -1,7 +1,7 @@
 import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UsersService } from '../../users/users.service';
+import { UsersService } from '../../domain/users/users.service';
 
 export class MangerGuard extends AuthGuard('myjwtstrategy') {
   constructor(private readonly userService: UsersService) {

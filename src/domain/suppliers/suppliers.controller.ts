@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { SuppliersService } from './suppliers.service';
 import { CreateSupplierDto } from './dto/create-supplier.dto';
-import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
 import { Request } from 'express';
+import { MyJwtGuard } from '../../auth/guard/my.jwt.guard';
 
 @Controller('suppliers')
 export class SuppliersController {

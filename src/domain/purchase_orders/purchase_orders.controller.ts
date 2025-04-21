@@ -12,9 +12,9 @@ import {
 import { PurchaseOrdersService } from './purchase_orders.service';
 import { CreatePurchaseOrderDto } from './dto/create-purchase_order.dto';
 import { UpdatePurchaseOrderDto } from './dto/update-purchase_order.dto';
-import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
-import { PurchaseOrderGuard } from '../auth/guard/purchase-order.guard';
 import { Request } from 'express';
+import { MyJwtGuard } from '../../auth/guard/my.jwt.guard';
+import { PurchaseOrderGuard } from '../../auth/guard/purchase-order.guard';
 
 @Controller('purchase-orders')
 @UseGuards(MyJwtGuard)

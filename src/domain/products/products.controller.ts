@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { PurchaseOrderGuard } from '../auth/guard/product.guard';
-import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
+import { PurchaseOrderGuard } from '../../auth/guard/purchase-order.guard';
+import { MyJwtGuard } from '../../auth/guard/my.jwt.guard';
 
 @Controller('products')
 export class ProductsController {

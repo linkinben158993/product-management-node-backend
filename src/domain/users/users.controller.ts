@@ -11,9 +11,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PurchaseOrderGuard } from '../auth/guard/purchase-order.guard';
-import { MyJwtGuard } from '../auth/guard/my.jwt.guard';
 import { Request } from 'express';
+import { MyJwtGuard } from '../../auth/guard/my.jwt.guard';
+import { PurchaseOrderGuard } from '../../auth/guard/purchase-order.guard';
 
 @Controller('users')
 export class UsersController {
