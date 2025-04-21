@@ -11,7 +11,9 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  private createProduct = (createProductDto: CreateProductDto): Product => {
+  private buildCreateProduct = (
+    createProductDto: CreateProductDto,
+  ): Product => {
     const product = new Product();
     product.name = createProductDto.name;
     product.sku = createProductDto.sku;
@@ -22,12 +24,15 @@ export class ProductsService {
   };
 
   async createOrUpdate(createProductDto: CreateProductDto) {
-    const supplier = await this.productRepository.upsert(createProductDto, [
-      'id',
-      'sku',
-    ]);
-    console.log('Newly created or update supplier information:', supplier);
-    return supplier;
+    console.log('Upsert a product with info=', createProductDto);
+    const product = await this.productRepository.upsert(
+      this.buildCreateProduct(createProductDto),
+      {
+        conflictPaths: ['sku'],
+      },
+    );
+    console.log('Newly created or update supplier information:', product);
+    return product;
   }
 
   async findAll() {

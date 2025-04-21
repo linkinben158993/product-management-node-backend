@@ -1,3 +1,40 @@
+## Product Management Node Backend
+
+## Local setup
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+
+# Up your docker stacks in background
+$ docker-compose -f .\src\resources\docker\docker-compose.yml up -d
+
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode NOT AVAILABLE at the moment.
+$ npm run start:prod
+```
+
+## Run tests - TO BE DONE
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -25,39 +62,8 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
 
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
+## Deployment - TO BE DONE
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 

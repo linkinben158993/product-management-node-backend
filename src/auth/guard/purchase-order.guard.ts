@@ -1,7 +1,7 @@
 import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { UsersService } from '../../users/users.service';
+import { UsersService } from '../../domain/users/users.service';
 
 export class PurchaseOrderGuard extends AuthGuard('myjwtstrategy') {
   constructor(private readonly userService: UsersService) {
@@ -25,11 +25,14 @@ export class PurchaseOrderGuard extends AuthGuard('myjwtstrategy') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (path === '/purchase-orders' && methods.post) {
         return role === 'procurement' || role === 'manager';
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      else if (path === '/purchase-orders/:id' && methods.patch) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      } else if (path === '/purchase-orders/:id' && methods.patch) {
         return role === 'manager' || role === 'finance';
-      } else {
+      } else if (
+        path === '/purchase-orders/review/request/:id' &&
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        methods.patch
+      ) {
         return role === 'procurement';
       }
     }

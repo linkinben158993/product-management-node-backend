@@ -5,11 +5,11 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { UsersModule } from './users/users.module';
-import { SuppliersModule } from './suppliers/suppliers.module';
-import { ProductsModule } from './products/products.module';
-import { PurchaseOrdersModule } from './purchase_orders/purchase_orders.module';
 import * as process from 'node:process';
+import { UsersModule } from './domain/users/users.module';
+import { SuppliersModule } from './domain/suppliers/suppliers.module';
+import { ProductsModule } from './domain/products/products.module';
+import { PurchaseOrdersModule } from './domain/purchase_orders/purchase_orders.module';
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import * as process from 'node:process';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         schema: configService.get('DB_SCHEMA'),
-        entities: [join(process.cwd(), 'dist/**/*.entity.js')],
+        entities: [join(process.cwd(), 'dist/**/**/*.entity.js')],
         migrations: [join(process.cwd(), 'dist/migrations/**/*{.ts,.js}')],
         synchronize: configService.get('NODE_ENV') !== 'production',
       }),

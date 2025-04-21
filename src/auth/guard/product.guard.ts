@@ -2,7 +2,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
-export class PurchaseOrderGuard extends AuthGuard('myjwtstrategy') {
+export class ProductGuard extends AuthGuard('myjwtstrategy') {
   // Todo: There must be a more generic way we can do this
   canActivate(
     context: ExecutionContext,

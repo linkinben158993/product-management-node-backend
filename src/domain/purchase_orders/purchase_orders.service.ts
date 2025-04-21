@@ -18,19 +18,33 @@ export class PurchaseOrdersService {
     private readonly supplierRepository: Repository<Supplier>,
   ) {}
 
-  private createPurchaseOrder = (
+  private buildCreatePurchaseOrder = (
     user: User,
     supplier: Supplier,
   ): PurchaseOrder => {
     const purchaseOrder = new PurchaseOrder();
-    purchaseOrder.status = 'draft';
     purchaseOrder.created_by = user;
     purchaseOrder.supplier_id = supplier;
 
     return purchaseOrder;
   };
 
-  async create(user: any, supplierId: string, supplierEmail: string) {
+  private buildUpdatePurchaseOrder = (
+    id: string,
+    updatePurchaseOrderDto: UpdatePurchaseOrderDto,
+  ): PurchaseOrder => {
+    const purchaseOrder = new PurchaseOrder();
+    purchaseOrder.status = updatePurchaseOrderDto.status;
+    purchaseOrder.id = id;
+
+    return purchaseOrder;
+  };
+
+  async createOrUpdateWithSupplier(
+    user: any,
+    supplierId: string,
+    supplierEmail: string,
+  ) {
     console.log(
       'Purchase Order User user=',
       user,
@@ -51,9 +65,31 @@ export class PurchaseOrdersService {
       throw new NotFoundException();
     }
 
-    return await this.purchaseOrderRepository.save(
-      this.createPurchaseOrder(createUser, supplier),
+    return await this.purchaseOrderRepository.upsert(
+      this.buildCreatePurchaseOrder(createUser, supplier),
+      {
+        conflictPaths: ['id'],
+      },
     );
+  }
+
+  async requestReview(
+    id: string,
+    updatePurchaseOrderDto: UpdatePurchaseOrderDto,
+  ) {
+    console.log(
+      'Update purchase order with id=',
+      id,
+      'status=',
+      updatePurchaseOrderDto,
+    );
+
+    await this.purchaseOrderRepository.update(
+      { id: id },
+      this.buildUpdatePurchaseOrder(id, updatePurchaseOrderDto),
+    );
+
+    return { id, updatePurchaseOrderDto };
   }
 
   findAll() {
@@ -65,7 +101,9 @@ export class PurchaseOrdersService {
   }
 
   async findPendingReview() {
-    return await this.purchaseOrderRepository.find({ where: { status: 'pending' } });
+    return await this.purchaseOrderRepository.find({
+      where: { status: 'pending' },
+    });
   }
 
   update(id: string, updatePurchaseOrderDto: UpdatePurchaseOrderDto) {
