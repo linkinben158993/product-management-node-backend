@@ -20,6 +20,11 @@ $ npm run start:dev
 
 # production mode NOT AVAILABLE at the moment.
 $ npm run start:prod
+
+# Basic users with role are currently hardcoded here for development purposes only
+
+[TEST USERS](https://github.com/linkinben158993/product-management-node-backend/blob/main/src/domain/users/entities/user.entity.ts#L43-L46)
+
 ```
 
 ## Run tests - TO BE DONE
