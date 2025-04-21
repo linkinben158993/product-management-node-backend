@@ -67,7 +67,9 @@ export class PurchaseOrdersService {
 
     return await this.purchaseOrderRepository.upsert(
       this.buildCreatePurchaseOrder(createUser, supplier),
-      ['id'],
+      {
+        conflictPaths: ['id'],
+      },
     );
   }
 
@@ -87,7 +89,7 @@ export class PurchaseOrdersService {
       this.buildUpdatePurchaseOrder(id, updatePurchaseOrderDto),
     );
 
-    return updatePurchaseOrderDto;
+    return { id, updatePurchaseOrderDto };
   }
 
   findAll() {

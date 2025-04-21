@@ -25,7 +25,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(MyJwtGuard, PurchaseOrderGuard)
+  @UseGuards(MyJwtGuard)
   findAll() {
     return this.usersService.findAll();
   }

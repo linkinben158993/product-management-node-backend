@@ -33,8 +33,14 @@ export class UsersService {
 
   async findAll() {
     const users = await this.usersRepository.find();
-    console.log('Found users', users);
-    return users;
+    // Todo: Enhance this
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const maskPass = users.map(({ password_hash, ...rest }) => rest);
+    console.log(
+      'Found users',
+      maskPass.map((item) => item.id),
+    );
+    return maskPass;
   }
 
   async findOne(id: string) {
