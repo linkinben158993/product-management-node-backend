@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -27,4 +27,18 @@ export class PurchaseOrder {
 
   @Column({ type: 'timestamptz', default: () => 'NOW()' })
   updated_at: Date;
+
+  @BeforeInsert()
+  setStatus(status: string) {
+    if (!status) {
+      this.status = 'draft';
+    } else {
+      this.status = status;
+    }
+  }
+
+  @BeforeUpdate()
+  setUpdatedAt() {
+    this.updated_at = new Date();
+  }
 }
