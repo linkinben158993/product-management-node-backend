@@ -22,6 +22,24 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Post API(s) is under /root/postman with the following api:
+- /users/register
+  - Default users are:
+    - procurement_user = ['thienan.nguyenhoang311@gmail.com']
+    - manager_user = ['thienan.nguyenhoang411@gmail.com']
+    - inventory_user = ['thienan.nguyenhoang511@gmail.com']
+    - finance_user = ['thienan.nguyenhoang611@gmail.com']
+- /users: List all users (Basic Jwt guard only)
+- /auth/login: Generate token for authorizing requests.
+- /suppliers: Create supplier (Basic Jwt guard only)
+- /products: Create product (Guard with user of role inventory)
+- /purchase-orders:
+  - Create PO (Guard with user of type procurement)
+  - Deriving user from current logged in user
+  - Receiving supplier id for creating constraints supplier id
+- /purchases-orders/review/:id:
+  - Updating PO to pending-review (Guard with user of type manager and finance only)
+
 ## Basic users with role are currently hardcoded here for development purposes only
 - [TEST USERS](https://github.com/linkinben158993/product-management-node-backend/blob/main/src/domain/users/entities/user.entity.ts#L43-L46)
 

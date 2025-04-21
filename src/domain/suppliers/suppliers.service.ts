@@ -11,7 +11,7 @@ export class SuppliersService {
     private readonly supplierRepository: Repository<Supplier>,
   ) {}
 
-  private createPurchaseOrder = (user: any): Supplier => {
+  private createSupplier = (user: any): Supplier => {
     const supplier = new Supplier();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     supplier.email = user.email;
@@ -29,7 +29,7 @@ export class SuppliersService {
       createSupplierDto,
     );
     const supplier = await this.supplierRepository.upsert(
-      this.createPurchaseOrder(user),
+      this.createSupplier(user),
       ['id'],
     );
     console.log('Newly created or update supplier information:', supplier);
